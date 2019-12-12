@@ -1,0 +1,9 @@
+FROM rocker/tidyverse:3
+
+COPY app /app
+WORKDIR /app
+
+RUN Rscript install_dependencies.R
+
+EXPOSE 80
+CMD ["R", "-e", "options('shiny.port'=80,shiny.host='0.0.0.0');shiny::runApp('app.R')"]
