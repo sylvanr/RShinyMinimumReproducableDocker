@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 RUN R -e "install.packages(c('shiny'), repos='http://cran.rstudio.com/')"
 
 # Copy configuration files into the Docker image
-ADD app.R /etc/shiny-server/
+ADD /app /srv/shiny-server/
 WORKDIR /srv/shiny-server/
 
 EXPOSE 80
