@@ -4,9 +4,13 @@ palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
           "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
 #install.pacakages("shiny")
 library(shiny)
-
+print("env")
+print(Sys.getenv())
+headerText <- Sys.getenv('HEADER')
+print(headerText)
+print("end env")
 ui <- fluidPage(
-  headerPanel('Iris k-means clustering'),
+  headerPanel(headerText),
   sidebarPanel(
     selectInput('xcol', 'X Variable', names(iris)),
     selectInput('ycol', 'Y Variable', names(iris),
@@ -20,15 +24,15 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-  
+
   selectedData <- reactive({
     iris[, c(input$xcol, input$ycol)]
   })
-  
+
   clusters <- reactive({
     kmeans(selectedData(), input$clusters)
   })
-  
+
   output$plot1 <- renderPlot({
     par(mar = c(5.1, 4.1, 0, 1))
     plot(selectedData(),
@@ -36,8 +40,7 @@ server <- function(input, output) {
          pch = 20, cex = 3)
     points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
   })
-  
+
 }
 
 shinyApp(ui = ui, server = server)
-

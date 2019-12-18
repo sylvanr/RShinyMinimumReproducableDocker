@@ -2,10 +2,12 @@ version: '3.7'
 
 services:
   app:
-    container_name: sdv-rshiny-project-template
-    image: sdv-rshiny-project-template
+    container_name: dockery
+    image: dockery
     build:
       context: ..
       dockerfile: docker/Dockerfile.prod
     ports:
       - "8001:80"
+    environment:
+      - HEADER=Sylvans header
